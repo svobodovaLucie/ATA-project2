@@ -2,6 +2,10 @@
 """
 Dynamic analyser of a cart controller.
 """
+# Automatizované testování a dynamická analýza (ATA)
+# Projekt 2 - automaty
+# Lucie Svobodová (xsvobo1x@stud.fit.vutbr.cz)
+# Fakulta informačních technologií VUT, 2023
 
 # pocet slotu voziku ze zadani
 slots = 4
@@ -86,12 +90,12 @@ def onloading(time, pos, content, w, slot):
 
     # Vlastnost 6
     if contents_loaded >= 4:
-        print(f'{time}:error: loading content when 4 slots occupied')
+        print(f'{time}:error: loading content when 4 slots are occupied')
         all_properties_hold = False
         
     # Vlastnost 7
     if current_capacity + w_num > capacity:
-        print(f'{time}:error: capacity overloaded')
+        print(f'{time}:error: capacity overload')
         all_properties_hold = False
 
     # 'load' the content
@@ -102,8 +106,9 @@ def onloading(time, pos, content, w, slot):
 
 
 def onunloading(time, pos, content, w, slot):
-    global all_properties_hold, slots_occupied, requests, contents_loaded
+    global all_properties_hold, slots_occupied, requests, contents_loaded, current_capacity
     slot_num = int(slot)
+    w_num = int(w)
 
     # Vlastnost 2
     if not slots_occupied[slot_num]:
@@ -117,6 +122,7 @@ def onunloading(time, pos, content, w, slot):
 
     contents_loaded -= 1
     slots_occupied[slot_num] = False
+    current_capacity -= w_num
 
 
 def onevent(event):
